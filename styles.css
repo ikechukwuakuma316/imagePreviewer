@@ -13,7 +13,8 @@ body {
 .input-container,
 .button-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -40,12 +41,19 @@ button:hover {
     width: 200px;
     height: 200px;
     object-fit: cover; /* This will ensure the aspect ratio of the image is maintained */
-}
-#previewImg {
     margin-top: 20px;
     max-width: 100%;
     height: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Media query for screens larger than 600px */
+@media (min-width: 600px) {
+    .input-container,
+    .button-container {
+        flex-direction: row;
+        justify-content: center;
+    }
 }

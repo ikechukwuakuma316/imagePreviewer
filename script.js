@@ -1,6 +1,8 @@
 // Get the input elements
 const uploadInput = document.getElementById('upload');
 const imageUrlInput = document.getElementById('imageUrl');
+const previewImg = document.getElementById('previewImg');
+const downloadBtn = document.getElementById('downloadBtn');
 
 // Add event listener to the file input
 uploadInput.addEventListener('change', function() {
@@ -11,8 +13,6 @@ uploadInput.addEventListener('change', function() {
 document.getElementById('previewBtn').addEventListener('click', function () {
     const file = uploadInput.files[0];
     const imageUrl = imageUrlInput.value;
-    const previewImg = document.getElementById('previewImg');
-    const downloadBtn = document.getElementById('downloadBtn');
 
     let imgSrc = '';
     let downloadName = '';
