@@ -51,3 +51,24 @@ document.getElementById('previewBtn').addEventListener('click', function () {
             .catch(error => console.error(error));
     });
 });
+
+// Get the zoom buttons
+const zoomInBtn = document.getElementById('zoomInBtn');
+const zoomOutBtn = document.getElementById('zoomOutBtn');
+
+// Set a zoom level variable
+let zoomLevel = 1;
+
+// Add event listener to the zoom in button
+zoomInBtn.addEventListener('click', function() {
+    zoomLevel += 0.1; // Increase the zoom level by 0.1
+    previewImg.style.transform = `scale(${zoomLevel})`; // Apply the zoom level to the image
+});
+
+// Add event listener to the zoom out button
+zoomOutBtn.addEventListener('click', function() {
+    if (zoomLevel > 0.1) { // Prevent the zoom level from going below 0.1
+        zoomLevel -= 0.1; // Decrease the zoom level by 0.1
+        previewImg.style.transform = `scale(${zoomLevel})`; // Apply the zoom level to the image
+    }
+});
