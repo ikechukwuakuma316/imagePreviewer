@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Previewer</title>
+    <title>Image Preview and Download</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-    <h1>Image Previewer</h1>
-    <input type="text" id="imageUrlInput" placeholder="Enter image URL">
-    <button id="previewButton">Preview Image</button>
-    <div id="imageContainer"></div>
+<div class="input-container">
+    <input type="file" id="upload" accept="image/*">
+    <input type="text" id="imageUrl" placeholder="Enter image URL">
 </div>
+<div class="button-container">
+    <button id="previewBtn">Preview</button>
+    <button id="downloadBtn">Download</button>
+</div>
+<img id="previewImg" src="" alt="Image Preview" style="display:none;">
 <script src="script.js"></script>
 </body>
 </html>

@@ -1,38 +1,53 @@
 // Get the input elements
-const imageUrlInputElement = document.getElementById('imageUrlInput');
-const imageContainerElement = document.getElementById('imageContainer');
-const previewButtonElement = document.getElementById('previewButton');
+const uploadInput = document.getElementById('upload');
+const imageUrlInput = document.getElementById('imageUrl');
 
-previewButtonElement.addEventListener('click', function() {
-    const imageUrl = imageUrlInputElement.value;
+// Add event listener to the file input
+uploadInput.addEventListener('change', function() {
+    // Clear the image URL input field when a file is selected
+    imageUrlInput.value = '';
+});
 
-    // Clear any existing content in the image container
-    imageContainerElement.innerHTML = '';
+document.getElementById('previewBtn').addEventListener('click', function () {
+    const file = uploadInput.files[0];
+    const imageUrl = imageUrlInput.value;
+    const previewImg = document.getElementById('previewImg');
+    const downloadBtn = document.getElementById('downloadBtn');
 
-    if (imageUrl) {
-        // Create an image element
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = 'Image Preview';
+    let imgSrc = '';
+    let downloadName = '';
 
-        // Create a download button
-        const downloadButton = document.createElement('button');
-        downloadButton.innerText = 'Download Image';
-        downloadButton.classList.add('download-button');
-
-        downloadButton.addEventListener('click', function() {
-            const a = document.createElement('a');
-            a.href = imageUrl;
-            a.download = '';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
-
-        // Add the image and download button to the image container
-        imageContainerElement.appendChild(img);
-        imageContainerElement.appendChild(downloadButton);
+    if (file) {
+        imgSrc = URL.createObjectURL(file);
+        downloadName = file.name;
+    } else if (imageUrl) {
+        imgSrc = imageUrl;
+        downloadName = imageUrl.split('/').pop();
     } else {
-        alert('Please enter a valid image URL.');
+        alert('Please select a file or enter an image URL.');
+        return;
     }
+
+    previewImg.src = imgSrc;
+    previewImg.style.display = 'block';
+
+    // Clone and replace the download button to remove previous event listeners
+    const newDownloadBtn = downloadBtn.cloneNode(true);
+    downloadBtn.parentNode.replaceChild(newDownloadBtn, downloadBtn);
+
+    // Add a new event listener to the new download button
+    newDownloadBtn.addEventListener('click', function () {
+        fetch(imgSrc)
+            .then(response => response.blob())
+            .then(blob => {
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = downloadName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            })
+            .catch(error => console.error(error));
+    });
 });
